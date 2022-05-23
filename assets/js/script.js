@@ -10,8 +10,47 @@ var displayDate = function() {
     $('#counter').html(date);
 };
 
-var setColor = function() {
-    
+var setColor = function(_iBlockEl, currentTime, textTime) {
+    var iTime_CUR = currentTime.split("");
+    var iTime_TXT = textTime.split("");
+
+    if(iTime_CUR[iTime_CUR.length - 2] !== iTime_TXT[iTime_TXT.length - 2])
+    {
+        if(iTime_CUR[iTime_CUR.length - 2] > iTime_TXT[iTime_TXT.length - 2])
+        {
+            _iBlockEl.classList.add("future");
+        }
+        else
+        {
+            _iBlockEl.classList.add("present");
+        }
+    }
+    else
+    {
+
+        var t_CUR = parseHour(iTime_CUR);
+        var t_TXT = parseHour(iTime_TXT);
+
+        if(parseInt(t_CUR) > parseInt(t_TXT))
+        {
+            _iBlockEl.addClass("future");
+        }
+        else if(parseInt(t_CUR) < parseInt(t_TXT))
+        {
+            if(parseInt(t_TXT) === 12)
+            {
+                _iBlockEl.classList.add("future");
+            }
+            else
+            {
+                _iBlockEl.classList.add("past");
+            }
+        }
+        else
+        {
+            _iBlockEl.classList.add("present");
+        }
+    }
 };
 
 var generateTimeBlock = function(iterations) {
